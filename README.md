@@ -24,7 +24,7 @@
 1.编译docker镜像
 
 ```
-docker build -t shiguanghuxian/seaweedfs .
+docker build -t name .
 ```
 
 2.使用docker-compose 执行新建容器组
