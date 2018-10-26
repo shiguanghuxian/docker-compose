@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:9.6
+    container_name: "postgres_9_6"
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data

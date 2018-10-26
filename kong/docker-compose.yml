@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  kong-database:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_USER=kong
+      - POSTGRES_DB=kong
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - "kong-net"
+
+  kong: 
+    image: kong:0.13.0
+    environment: 
+      - KONG_DATABASE=postgres
+      - KONG_PG_HOST=kong-database
+      - KONG_CASSANDRA_CONTACT_POINTS=kong-database
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
+    ports:
+      - 8000:8000
+      - 8443:8443
+      - 8001:8001
+      - 8444:8444
+    links: 
+      - kong-database
+    networks:
+      - "kong-net"
+
+  kong-dashboard:
+    image: pgbi/kong-dashboard:v3
+    ports:
+      - "8080:8080"
+    command: "start --kong-url http://kong:8001"
+    links:
+      - kong
+    networks:
+      - "kong-net"
+
+networks: 
+  kong-net: 
+    driver: bridge
