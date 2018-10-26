@@ -31,6 +31,8 @@ docker build -t name .
 
 ```
 docker-compose up
+
+docker-compose up --force-recreate // 强制新建
 ```
 
 3.启动容器组
@@ -56,3 +58,4 @@ docker-compose ps
 ```
 docker-compose down
 ```
+
