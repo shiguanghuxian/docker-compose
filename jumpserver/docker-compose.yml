@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  jumpserver:
+    image: registry.jumpserver.org/public/jumpserver:1.0.0
+    restart: always
+    container_name: "jumpserver_1_0_0"
+    ports:
+      - 8011:80
+      - 2222:2222
+    volumes: 
+      - ./data:/opt/jumpserver/data
