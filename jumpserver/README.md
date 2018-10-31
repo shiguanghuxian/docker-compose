@@ -1,21 +1,11 @@
 # jumpserver
 
-参考[https://segmentfault.com/a/1190000016856368](https://segmentfault.com/a/1190000016856368)
+最新1.4.3版 参考 http://docs.jumpserver.org/zh/docs/dockerinstall.html
 
-## 安装
+## 运行
 
-1. 下载镜像
+直接执行`docker-compose up`即可
 
-```
-docker pull registry.jumpserver.org/public/jumpserver:1.0.0
-```
-
-2. 运行
-
-```
-docker-compose up
-```
 
 ## 备注
-
-有时间后将mysql和redis单独抽出为容器
+如果访问web管理界面错误，可以删除容器重新启动试试

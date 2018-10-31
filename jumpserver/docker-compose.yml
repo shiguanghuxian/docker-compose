@@ -1,12 +1,55 @@
 version: '3'
 
 services:
-  jumpserver:
-    image: registry.jumpserver.org/public/jumpserver:1.0.0
+  db:
+    image: mysql:5.7.23
     restart: always
-    container_name: "jumpserver_1_0_0"
+    container_name: "mysql_5_7_jumpserver"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: jumpserver
+      MYSQL_USER: jumpserver
+      MYSQL_PASSWORD: 123456
     ports:
-      - 8011:80
+      - 3308:3306
+    volumes: 
+      - ./dbdata:/var/lib/mysql
+    networks:
+      - "jumpservernet"
+  redis:
+    image: redis:3
+    container_name: "redis3_jumpserver"
+    restart: always
+    ports:
+      - 6378:6379
+    volumes: 
+      - ./redisdata:/data
+    networks:
+      - "jumpservernet"
+  jumpserver:
+    image: wojiushixiaobai/jumpserver:1.4.3
+    container_name: "jumpserver_1_4_3"
+    restart: always
+    depends_on: 
+      - db
+      - redis
+    environment: 
+      DB_ENGINE: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: jumpserver
+      DB_PASSWORD: 123456
+      DB_NAME: jumpserver
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - 8090:80
       - 2222:2222
     volumes: 
-      - ./data:/opt/jumpserver/data
+      - ./jmsdata:/opt/jumpserver/data
+    networks:
+      - "jumpservernet"
+
+networks: 
+  jumpservernet: 
+    driver: bridge
