@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  # composerphp: 
+  #   image: "composer"
+  #   volumes:
+  #     - "./www:/app"
+  #   command: install
+  grpcphp:
+    build: .
+    container_name: "grpc_php7"
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./www:/var/www/html
+      # - "./etc/php/php.ini:/etc/php/7.2/fpm/conf.d/php.ini"
+  web:
+    image: nginx:alpine
+    volumes:
+      - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./etc/ssl:/etc/ssl"
+      - "./www:/var/www/html"
+      - "./etc/nginx/default.template.conf:/etc/nginx/conf.d/default.template"
+    ports:
+      - "8090:80"
+      - "8443:443"
+    environment:
+      - NGINX_HOST=localhost
+    command: /bin/sh -c "envsubst '$$NGINX_HOST' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    depends_on:
+      - grpcphp
+
