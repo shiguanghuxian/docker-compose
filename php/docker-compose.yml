@@ -16,6 +16,7 @@ services:
       # - "./etc/php/php.ini:/etc/php/7.2/fpm/conf.d/php.ini"
   web:
     image: nginx:alpine
+    container_name: "nginx_php7"
     volumes:
       - "./etc/nginx/default.conf:/etc/nginx/conf.d/default.conf"
       - "./etc/ssl:/etc/ssl"
