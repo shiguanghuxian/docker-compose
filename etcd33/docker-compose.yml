@@ -3,8 +3,7 @@ version: '3'
 services:
   etcd:
     image: "quay.io/coreos/etcd:v3.3"
-    container_name: "etcd_3_3"
-    restart: always
+    container_name: "etcdv3.3"
     environment:
       ETCD_ADVERTISE_CLIENT_URLS: "http://0.0.0.0:2379"
       ETCD_LISTEN_CLIENT_URLS: "http://0.0.0.0:2379"
@@ -17,10 +16,9 @@ services:
     - 4001:4001
   etcd-manage:
     build: .
-    container_name: "etcd-manage"
-    restart: always
     volumes:
-      - ./conf/config.default.ini:/app/conf/config.default.ini
+      - ./bin/config/cfg.toml:/app/config/cfg.toml
     ports:
-      - "9090:9090"
-
+      - "10280:10280"
+    depends_on:
+      - etcd
