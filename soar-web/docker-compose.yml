@@ -1,0 +1,15 @@
+version: '3'
+
+services: 
+  redis:
+    image: becivells/soar-web
+    container_name: "soar-web"
+    restart: always
+    ports:
+      - 5077:5077
+    networks:
+      - "soarnet"
+
+networks: 
+  soarnet: 
+    driver: bridge
