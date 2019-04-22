@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.9.1
+    container_name: "prometheus"
+    networks:
+      - "prometheusnet"
+    volumes:
+      - ./prometheus/work:/prometheus
+      - ./prometheus/etc/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9999:9090
+  grafana: 
+    image: grafana/grafana:6.1.4
+    container_name: "grafana"
+    networks:
+      - "prometheusnet"
+    volumes: 
+      - ./grafana/lib:/var/lib/grafana
+      - ./grafana/logs:/var/log/grafana
+    environment: 
+      GF_SECURITY_ADMIN_PASSWORD: 123456
+    ports:
+      - 3000:3000
+
+networks: 
+  prometheusnet: 
+    driver: bridge

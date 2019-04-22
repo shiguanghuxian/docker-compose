@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  diving:
+    image: vicanso/diving
+    container_name: "diving"
+    ports:
+      - 7001:7001
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
