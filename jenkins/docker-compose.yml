@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  db:
+    image: jenkins:2.60.3-alpine
+    restart: always
+    container_name: "jenkins2_60_3"
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes: 
+      - ./jenkins_home:/var/jenkins_home
+    networks:
+      - "jenkinsnet"
+
+networks: 
+  jenkinsnet: 
+    driver: bridge
