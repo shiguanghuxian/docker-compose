@@ -6,6 +6,8 @@
 
 ## 备注
 
+国内用户可以将etcd镜像地址换成 quay.azk8s.cn/coreos/etcd:v3.3 
+
 配置文件 [bin/config/cfg.toml](bin/config/cfg.toml)
 
 ```
