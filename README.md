@@ -22,6 +22,10 @@
 | [php](php) | php快速开发环境，包含grpc扩展 |
 | [soar-web](soar-web) | SOAR(SQL Optimizer And Rewriter)是一个对SQL进行优化和改写的自动化工具。 由小米人工智能与云平台的数据库团队开发与维护。 |
 | [Yearning](Yearning) | Mysql web端sql审核平台 |
+| [KeyDB](keydb) | KeyDB项目是从redis fork出来的分支。众所周知redis是一个单线程的kv内存存储系统，而KeyDB在100%兼容redis API的情况下将redis改造成多线程 |
+| [jaegertracing](jaegertracing) | Jaeger 是Uber推出的一款开源分布式追踪系统，兼容OpenTracing API。分布式追踪系统用于记录请求范围内的信息。 |
+| [prometheus](prometheus) | 普罗米修斯监控系统 |
+
 
 
 ## 备注
