@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: elasticsearch:6.8.6
+    # restart: always
+    environment:
+      discovery.type: "single-node"
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes: 
+      - ./es/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./es/data:/usr/share/elasticsearch/data
+  head:
+    image: mobz/elasticsearch-head:5-alpine
+    # restart: always
+    ports:
+      - 9100:9100
+  kibana:
+    image: kibana:6.8.6
+    # restart: always
+    environment:
+      discovery.type: "single-node"
+    ports:
+      - 5601:5601
+    volumes: 
+      - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
