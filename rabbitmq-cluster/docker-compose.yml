@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  rabbitmq1:
+    image: rabbitmq:3.7-management
+    hostname: rabbitmq1
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=shiguanghuxian
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=123456
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./rabbitmq1:/var/lib/rabbitmq
+  rabbitmq2:
+    image: rabbitmq:3.7-management
+    hostname: rabbitmq2
+    depends_on:
+      - rabbitmq1
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=shiguanghuxian
+    volumes:
+      - ./cluster-entrypoint.sh:/usr/local/bin/cluster-entrypoint.sh
+      - ./rabbitmq2:/var/lib/rabbitmq
+    entrypoint: /usr/local/bin/cluster-entrypoint.sh
+    ports:
+      - "5673:5672"
+  rabbitmq3:
+    image: rabbitmq:3.7-management
+    hostname: rabbitmq3
+    depends_on:
+      - rabbitmq1
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=shiguanghuxian
+    volumes:
+      - ./cluster-entrypoint.sh:/usr/local/bin/cluster-entrypoint.sh
+      - ./rabbitmq3:/var/lib/rabbitmq
+    entrypoint: /usr/local/bin/cluster-entrypoint.sh
+    ports:
+      - "5675:5672"
