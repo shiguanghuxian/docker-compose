@@ -2,18 +2,40 @@ version: '3'
 
 services:
   prometheus:
-    image: prom/prometheus:v2.9.1
+    image: prom/prometheus:v2.15.1
     container_name: "prometheus"
+    logging:
+      options:
+        max-size: "1g"
     networks:
       - "prometheusnet"
     volumes:
       - ./prometheus/work:/prometheus
-      - ./prometheus/etc/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/etc:/etc/prometheus
     ports:
       - 9999:9090
+    command: 
+      - --web.enable-lifecycle
+      - --config.file=/etc/prometheus/prometheus.yml
+  alertmanager: 
+    image: prom/alertmanager:v0.20.0
+    container_name: "alertmanager"
+    logging:
+      options:
+        max-size: "1g"
+    networks:
+      - "prometheusnet"
+    volumes:
+      - ./alertmanager/work:/alertmanager
+      - ./alertmanager/etc:/etc/alertmanager
+    ports:
+      - 9093:9093
   grafana: 
     image: grafana/grafana:6.1.4
     container_name: "grafana"
+    logging:
+      options:
+        max-size: "1g"
     networks:
       - "prometheusnet"
     volumes: 
