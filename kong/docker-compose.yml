@@ -6,6 +6,7 @@ services:
     environment:
       - POSTGRES_USER=kong
       - POSTGRES_DB=kong
+      - POSTGRES_PASSWORD=kong
     ports:
       - "5432:5432"
     volumes:
@@ -14,10 +15,11 @@ services:
       - "kong-net"
 
   kong: 
-    image: kong:0.13.0
+    image: kong:2.4.1-alpine
     environment: 
       - KONG_DATABASE=postgres
       - KONG_PG_HOST=kong-database
+      - KONG_PG_PASSWORD=kong
       - KONG_CASSANDRA_CONTACT_POINTS=kong-database
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
       - KONG_ADMIN_ACCESS_LOG=/dev/stdout
@@ -31,16 +33,6 @@ services:
       - 8444:8444
     links: 
       - kong-database
-    networks:
-      - "kong-net"
-
-  kong-dashboard:
-    image: pgbi/kong-dashboard:v3
-    ports:
-      - "8080:8080"
-    command: "start --kong-url http://kong:8001"
-    links:
-      - kong
     networks:
       - "kong-net"
 

@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  konga:
+    image: pantsel/konga:0.14.9
+    environment:
+      - NODE_ENV=production
+      - DB_ADAPTER=postgres
+      - DB_HOST=172.26.232.246
+      - DB_PORT=5432
+      - DB_USER=kong
+      - DB_PASSWORD=kong
+      - DB_DATABASE=konga
+    ports:
+      - "1337:1337"
+    networks:
+      - "kong-net"
+
+networks: 
+  kong-net: 
+    driver: bridge
