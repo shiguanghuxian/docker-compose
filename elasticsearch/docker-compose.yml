@@ -2,7 +2,7 @@ version: '3'
 
 services:
   elasticsearch:
-    image: elasticsearch:6.8.6
+    image: elasticsearch:7.13.2
     # restart: always
     environment:
       discovery.type: "single-node"
@@ -20,7 +20,7 @@ services:
     ports:
       - 9100:9100
   kibana:
-    image: kibana:6.8.6
+    image: kibana:7.13.2
     # restart: always
     environment:
       discovery.type: "single-node"
